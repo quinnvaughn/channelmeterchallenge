@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
+import { RootState } from "../store"
 
 type ColumnState = {
   columns: Column[]
@@ -60,3 +61,11 @@ export const columnSlice = createSlice({
     },
   },
 })
+
+export const { addColumn, deleteColumn, editColumnName, moveColumn } =
+  columnSlice.actions
+
+// Other code such as selectors can use the imported `RootState` type
+export const selectColumns = (state: RootState) => state.columns
+
+export default columnSlice.reducer
