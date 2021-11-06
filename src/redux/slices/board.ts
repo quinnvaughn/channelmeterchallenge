@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { RootState } from "../store"
 
 type BoardState = {
+  name: string
   columns: Column[]
 }
 
@@ -27,12 +28,16 @@ type Card = {
 
 const initialState: BoardState = {
   columns: [],
+  name: "",
 }
 
 export const boardSlice = createSlice({
   name: "board",
   initialState,
   reducers: {
+    addBoardName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload
+    },
     addColumn: (state) => {
       const column: Column = {
         id: uuidv4(),
@@ -187,6 +192,7 @@ export const {
   editCard,
   moveCard,
   deleteCard,
+  addBoardName,
 } = boardSlice.actions
 
 export const selectBoard = (state: RootState) => state.board
