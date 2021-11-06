@@ -51,6 +51,38 @@ export const boardSlice = createSlice({
 
       if (index === -1) return
 
+      // get all the cards of the column and move them.
+      // if it's the last column.
+      if (index === state.columns.length - 1) {
+        // if it's the only column do nothing, they'll get deleted.
+        if (state.columns.length === 1) {
+        } else {
+          // assign cards to the previous column.
+          // sort by position so they'll be in the same order in the new column.
+          state.columns[index].cards.sort((a, b) => a.position - b.position)
+          const newColumn = state.columns[index - 1]
+          for (let card of state.columns[index].cards) {
+            // add the card to the end of the new column
+            // assign new position and columnId
+            card.columnId = newColumn.id
+            card.position = newColumn.cards.length
+            newColumn.cards.push(card)
+          }
+        }
+      } else {
+        // not the last column.
+        // sort cards.
+        state.columns[index].cards.sort((a, b) => a.position - b.position)
+        const newColumn = state.columns[index + 1]
+        for (let card of state.columns[index].cards) {
+          // add the card to the end of the new column
+          // assign new position and columnId
+          card.columnId = newColumn.id
+          card.position = newColumn.cards.length
+          newColumn.cards.push(card)
+        }
+      }
+
       state.columns.splice(index, 1)
     },
     editColumnName: (
