@@ -1,34 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
 import { RootState } from "../store"
+import { Column, Card } from "../types"
 
 type BoardState = {
   name: string
   columns: Column[]
 }
 
-type Column = {
-  id: string
-  name: string
-  cards: Card[]
-}
-
-type Card = {
-  id: string
-  title: string
-  description?: string
-  // We just change position instead of having to delete/add a
-  // card from an array every time it is moved and map by
-  // asc position.
-  position: number
-  // This makes it easier to move from column to column.
-  // Would normally have this field if this was stored in a db.
-  columnId: string
-}
-
 const initialState: BoardState = {
-  columns: [],
-  name: "",
+  columns: [{ id: "4", name: "Kickass stuff", cards: [] }],
+  name: "So cool",
 }
 
 export const boardSlice = createSlice({
