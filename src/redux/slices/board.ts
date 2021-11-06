@@ -2,27 +2,35 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
 import { RootState } from "../store"
 
-type ColumnState = {
+type BoardState = {
   columns: Column[]
 }
 
 type Column = {
   id: string
   name: string
+  cards: Card[]
 }
 
-const initialState: ColumnState = {
+type Card = {
+  id: string
+  title: string
+  description?: string
+}
+
+const initialState: BoardState = {
   columns: [],
 }
 
-export const columnSlice = createSlice({
-  name: "columns",
+export const boardSlice = createSlice({
+  name: "board",
   initialState,
   reducers: {
     addColumn: (state) => {
       const column: Column = {
         id: uuidv4(),
         name: "Add a name",
+        cards: [],
       }
       state.columns.push(column)
     },
@@ -63,9 +71,10 @@ export const columnSlice = createSlice({
 })
 
 export const { addColumn, deleteColumn, editColumnName, moveColumn } =
-  columnSlice.actions
+  boardSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectColumns = (state: RootState) => state.columns
+export const selectBoard = (state: RootState) => state.board
 
-export default columnSlice.reducer
+export const selectColumns = (state: RootState) => state.board.columns
+
+export default boardSlice.reducer
