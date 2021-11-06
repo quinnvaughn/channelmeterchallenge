@@ -227,7 +227,7 @@ export const {
   addBoardName,
 } = boardSlice.actions
 
-export const selectBoard = (state: RootState) => state.board
+export const selectBoardName = (state: RootState) => state.board.name
 
 export const selectColumns = (state: RootState) => state.board.columns
 
