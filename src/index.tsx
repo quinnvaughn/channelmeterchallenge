@@ -5,10 +5,11 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { Provider } from "react-redux"
 import reportWebVitals from "./reportWebVitals"
 import { store } from "./redux/store"
+import theme from "./theme"
 
 const AppWithProviders = () => (
   <Provider store={store}>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   </Provider>
