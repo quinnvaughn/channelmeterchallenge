@@ -3,12 +3,16 @@ import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
 import { ChakraProvider } from "@chakra-ui/react"
+import { Provider } from "react-redux"
 import reportWebVitals from "./reportWebVitals"
+import { store } from "./redux/store"
 
 const AppWithProviders = () => (
-  <ChakraProvider>
-    <App />
-  </ChakraProvider>
+  <Provider store={store}>
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
+  </Provider>
 )
 
 ReactDOM.render(
