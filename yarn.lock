@@ -1224,14 +1224,13 @@
     "@chakra-ui/icon" "1.1.13"
     "@chakra-ui/utils" "1.8.4"
 
-"@chakra-ui/color-mode@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/color-mode/-/color-mode-1.2.0.tgz#e0d8d9028c9e9580663cc50072a0ba18375e0342"
-  integrity sha512-8oaFYqswjqfAKeMlK15q09tkB4ZDIlWpzUlSdh2jrJs3NCBacsSadH+y9lPexdfKfhCIn7jeHk2SDd8MYBgQHA==
+"@chakra-ui/color-mode@1.2.0", "@chakra-ui/color-mode@<1.2.0":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/color-mode/-/color-mode-1.1.13.tgz#aacc2c113d370bd04715d9225ae02064c5f392b3"
+  integrity sha512-IYCOfeP+5a/OFmixNN2nkcZIRwC7qNb26I7zqZ/hEQYr4gZi7FKEthKjpvZWKCwLRSNiidhkaPLzAf+lhqM/Qg==
   dependencies:
-    "@chakra-ui/hooks" "1.6.2"
-    "@chakra-ui/react-env" "1.0.8"
-    "@chakra-ui/utils" "1.8.4"
+    "@chakra-ui/hooks" "1.6.1"
+    "@chakra-ui/utils" "1.8.3"
 
 "@chakra-ui/control-box@1.0.17":
   version "1.0.17"
@@ -1286,6 +1285,16 @@
     "@chakra-ui/icon" "1.1.13"
     "@chakra-ui/react-utils" "1.1.2"
     "@chakra-ui/utils" "1.8.4"
+
+"@chakra-ui/hooks@1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.6.1.tgz#56e3bdb4e3d3b1dd827cf35b4be848817846e582"
+  integrity sha512-377Wvrt2BxpEY+1dDMsvm3J/E4GTdrxJM4fju24iUg0iFv87jg+jf6GXPsrZfdN6a9XfCCmclcmLxEH/0Trwpg==
+  dependencies:
+    "@chakra-ui/react-utils" "1.1.2"
+    "@chakra-ui/utils" "1.8.3"
+    compute-scroll-into-view "1.0.14"
+    copy-to-clipboard "3.3.1"
 
 "@chakra-ui/hooks@1.6.2":
   version "1.6.2"
@@ -1674,6 +1683,16 @@
   integrity sha512-YvcHkazYUIBaew5dfrts9Wp6/LPhHgbJoRYrKHBcfsDU+a63g/HoN4SCB19B46+pV3L6Fg4VPnOIED7KL7uoXg==
   dependencies:
     "@chakra-ui/utils" "1.8.4"
+
+"@chakra-ui/utils@1.8.3":
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.8.3.tgz#4eb6da7d772e483376ca47afeaf54cd453432340"
+  integrity sha512-v184c2TYwQYBEcDI/9C1DjN668jZVTJeb/DPtucAjEHNi4T0py3tjGDbUd05LoNoZ64uijtWYanfrr6Abe4m1Q==
+  dependencies:
+    "@types/lodash.mergewith" "4.6.6"
+    css-box-model "1.2.1"
+    framesync "5.3.0"
+    lodash.mergewith "4.6.2"
 
 "@chakra-ui/utils@1.8.4", "@chakra-ui/utils@^1.7.0":
   version "1.8.4"

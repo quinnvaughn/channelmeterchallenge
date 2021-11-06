@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
-import { ChakraProvider } from "@chakra-ui/react"
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react"
 import { Provider } from "react-redux"
 import reportWebVitals from "./reportWebVitals"
 import { store } from "./redux/store"
@@ -10,6 +10,7 @@ import theme from "./theme"
 const AppWithProviders = () => (
   <Provider store={store}>
     <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <App />
     </ChakraProvider>
   </Provider>
