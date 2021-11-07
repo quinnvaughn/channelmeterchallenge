@@ -9,25 +9,32 @@ import {
   MenuItem,
   Text,
   MenuDivider,
+  Button,
 } from "@chakra-ui/react"
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import {
   Draggable,
   DraggableProvidedDragHandleProps,
+  Droppable,
 } from "react-beautiful-dnd"
-import { Column as ColumnType } from "../../../redux/types"
+import { Card, Column as ColumnType } from "../../../redux/types"
 import { GrDrag } from "react-icons/gr"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
 import useBoard from "../../../hooks/useBoard"
+import CardList from "./CardList"
 
 type IProps = ColumnType & { index: number }
 
 export default function Column(props: IProps) {
   const [columnName, setColumnName] = useState(props.name)
-  const { deleteColumn, editColumnName } = useBoard()
+  const { deleteColumn, editColumnName, addCard } = useBoard()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [editVisibility, setEditVisibility] = useState(false)
+
+  const sortedCards = [...props.cards].sort(
+    (a: Card, b: Card) => a.position - b.position
+  )
 
   const renderColumnTitle = (
     draggable: DraggableProvidedDragHandleProps | undefined
@@ -111,6 +118,29 @@ export default function Column(props: IProps) {
                 </Menu>
               </Box>
             </Box>
+            <Droppable droppableId={props.id} type="card">
+              {(provided) => (
+                <Box
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  minHeight="2px"
+                >
+                  <CardList cards={sortedCards} />
+                  {provided.placeholder}
+                </Box>
+              )}
+            </Droppable>
+            <Button
+              color="gray.500"
+              size="sm"
+              my="10px"
+              mx="auto"
+              width="80%"
+              variant="ghost"
+              onClick={() => addCard(props.id)}
+            >
+              + Add a card
+            </Button>
           </Box>
         </Box>
       )}

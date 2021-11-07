@@ -5,9 +5,17 @@ import Column from "./Column"
 import AddColumnButton from "./Column/AddColumnButton"
 
 export default function ColumnList() {
-  const { columns } = useBoard()
+  const { columns, moveCard } = useBoard()
 
-  const onDragEnd = (result: DropResult) => {}
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return
+
+    moveCard(
+      result.destination.droppableId,
+      result.draggableId,
+      result.destination.index
+    )
+  }
 
   return (
     <Box

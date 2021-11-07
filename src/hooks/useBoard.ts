@@ -29,8 +29,8 @@ export default function useBoard() {
     dispatch(abn(name))
   }
 
-  const addCard = (title: string) => {
-    dispatch(aCard(title))
+  const addCard = (columnId: string) => {
+    dispatch(aCard(columnId))
   }
 
   const deleteCard = (columnId: string, cardId: string) => {
@@ -41,13 +41,8 @@ export default function useBoard() {
     dispatch(dc(columnId))
   }
 
-  const editCard = (
-    columnId: string,
-    cardId: string,
-    title?: string,
-    description?: string
-  ) => {
-    dispatch(eCard({ columnId, cardId, title, description }))
+  const editCard = (columnId: string, cardId: string, title?: string) => {
+    dispatch(eCard({ columnId, cardId, title }))
   }
 
   const editColumnName = (columnId: string, name: string) => {
