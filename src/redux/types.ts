@@ -7,7 +7,6 @@ export type Column = {
 export type Card = {
   id: string
   title: string
-  description?: string
   // We just change position instead of having to delete/add a
   // card from an array every time it is moved and map by
   // asc position.

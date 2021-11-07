@@ -113,7 +113,6 @@ export const boardSlice = createSlice({
         columnId: string
         cardId: string
         title?: string
-        description?: string
       }>
     ) => {
       const { columnId, cardId, ...rest } = action.payload
