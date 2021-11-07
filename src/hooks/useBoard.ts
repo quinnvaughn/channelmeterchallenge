@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import {
   selectBoardName,
-  selectColumns,
   addColumn as ac,
   addBoardName as abn,
   addCard as aCard,
@@ -11,11 +10,12 @@ import {
   editColumnName as ecn,
   moveCard as mCard,
   moveColumn as mc,
+  selectSortedColumns,
 } from "../redux/slices/board"
 
 export default function useBoard() {
   const boardName = useAppSelector(selectBoardName)
-  const columns = useAppSelector(selectColumns)
+  const columns = useAppSelector(selectSortedColumns)
   const dispatch = useAppDispatch()
 
   // Doing it this way allows the consumer to not even need
@@ -23,6 +23,13 @@ export default function useBoard() {
   // necessary.
   const addColumn = () => {
     dispatch(ac())
+  }
+
+  const sortedCards = (columnId: string) => {
+    const column = columns.find((col) => col.id === columnId)
+    if (!column) return []
+
+    return column.cards.sort((a, b) => a.position - b.position)
   }
 
   const addBoardName = (name: string) => {
@@ -69,5 +76,6 @@ export default function useBoard() {
     editColumnName,
     moveCard,
     moveColumn,
+    sortedCards,
   }
 }

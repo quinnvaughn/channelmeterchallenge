@@ -130,17 +130,19 @@ export default function Column(props: IProps) {
                 </Box>
               )}
             </Droppable>
-            <Button
-              color="gray.500"
-              size="sm"
-              my="10px"
-              mx="auto"
-              width="80%"
-              variant="ghost"
-              onClick={() => addCard(props.id)}
-            >
-              + Add a card
-            </Button>
+            <Box display="flex" justifyContent="center">
+              <Button
+                color="gray.500"
+                size="sm"
+                my="10px"
+                mx="auto"
+                width="80%"
+                variant="ghost"
+                onClick={() => addCard(props.id)}
+              >
+                + Add a card
+              </Button>
+            </Box>
           </Box>
         </Box>
       )}

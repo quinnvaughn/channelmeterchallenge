@@ -5,16 +5,30 @@ import Column from "./Column"
 import AddColumnButton from "./Column/AddColumnButton"
 
 export default function ColumnList() {
-  const { columns, moveCard } = useBoard()
+  const { columns, moveCard, moveColumn } = useBoard()
 
   const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return
+    const { destination, draggableId, type, source } = result
+    // If there is no destination, don't do anything.
+    if (!destination) return
 
-    moveCard(
-      result.destination.droppableId,
-      result.draggableId,
-      result.destination.index
+    // if the card is moved back to the same spot, don't do anything.
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
     )
+      return
+
+    // if a card is moved.
+    if (type === "card") {
+      moveCard(destination.droppableId, draggableId, destination.index)
+    }
+
+    // if column is moved
+    if (type === "column") {
+      // console.log(result)
+      moveColumn(draggableId, destination.index)
+    }
   }
 
   return (
@@ -22,7 +36,7 @@ export default function ColumnList() {
       display="block"
       position="relative"
       height="calc(100vh - 90px)"
-      overflowX="auto"
+      overflow="auto"
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="columns" direction="horizontal" type="column">

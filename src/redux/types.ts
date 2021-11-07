@@ -1,6 +1,7 @@
 export type Column = {
   id: string
   name: string
+  position: number
   cards: Card[]
 }
 

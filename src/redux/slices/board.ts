@@ -24,6 +24,7 @@ export const boardSlice = createSlice({
       const column: Column = {
         id: uuidv4(),
         name: "Add a name",
+        position: state.columns.length,
         cards: [],
       }
       state.columns.push(column)
@@ -82,16 +83,24 @@ export const boardSlice = createSlice({
       action: PayloadAction<{ id: string; newPosition: number }>
     ) => {
       const { newPosition, id } = action.payload
+
       if (newPosition < 0 || newPosition > state.columns.length + 1) return
 
-      const oldPosition = state.columns.findIndex((col) => col.id === id)
+      const column = state.columns.find((col) => col.id === id)
 
-      if (oldPosition === -1) return
-
-      const column = state.columns[oldPosition]
-
-      state.columns.splice(oldPosition, 1)
-      state.columns.splice(newPosition, 0, column)
+      if (!column) return
+      // set new position.
+      column.position = newPosition
+      // go through all columns with positions equal to or greater than
+      // that position and push them up.
+      for (let updatedColumn of state.columns) {
+        if (
+          updatedColumn.position >= newPosition &&
+          updatedColumn.id !== column.id
+        ) {
+          updatedColumn.position = updatedColumn.position + 1
+        }
+      }
     },
     addCard: (state, action: PayloadAction<string>) => {
       const column = state.columns.find((col) => col.id === action.payload)
@@ -191,6 +200,13 @@ export const boardSlice = createSlice({
 
         // set new position.
         card.position = position
+        // go through all cards with positions equal to or greater than
+        // that position and push them up.
+        for (let updatedCard of column.cards) {
+          if (updatedCard.position >= position && updatedCard.id !== card.id) {
+            updatedCard.position = updatedCard.position + 1
+          }
+        }
       }
     },
   },
@@ -210,6 +226,7 @@ export const {
 
 export const selectBoardName = (state: RootState) => state.board.name
 
-export const selectColumns = (state: RootState) => state.board.columns
+export const selectSortedColumns = (state: RootState) =>
+  [...state.board.columns].sort((a, b) => a.position - b.position)
 
 export default boardSlice.reducer
