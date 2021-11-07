@@ -9,7 +9,7 @@ type BoardState = {
 }
 
 const initialState: BoardState = {
-  columns: [{ id: "4", name: "Kickass stuff", cards: [] }],
+  columns: [],
   name: "So cool",
 }
 

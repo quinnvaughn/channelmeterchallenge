@@ -1,12 +1,79 @@
-import { Box, Heading } from "@chakra-ui/react"
-import { useState } from "react"
-import { Draggable } from "react-beautiful-dnd"
+import {
+  Box,
+  Heading,
+  HStack,
+  Input,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+  MenuDivider,
+} from "@chakra-ui/react"
+import React, { useState, useRef, useEffect } from "react"
+import {
+  Draggable,
+  DraggableProvidedDragHandleProps,
+} from "react-beautiful-dnd"
 import { Column as ColumnType } from "../../../redux/types"
+import { GrDrag } from "react-icons/gr"
+import { FiMoreHorizontal } from "react-icons/fi"
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
+import useBoard from "../../../hooks/useBoard"
 
 type IProps = ColumnType & { index: number }
 
 export default function Column(props: IProps) {
   const [columnName, setColumnName] = useState(props.name)
+  const { deleteColumn, editColumnName } = useBoard()
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [editVisibility, setEditVisibility] = useState(false)
+
+  const renderColumnTitle = (
+    draggable: DraggableProvidedDragHandleProps | undefined
+  ) => {
+    if (editVisibility) {
+      return (
+        <Input
+          ref={inputRef}
+          value={columnName}
+          size="sm"
+          onBlur={changeName}
+          onChange={(e) => setColumnName(e.target.value)}
+          bg="white"
+          onKeyDown={handleKeyDown}
+        />
+      )
+    } else {
+      return (
+        <Heading
+          {...draggable}
+          as="h6"
+          size="sm"
+          ml="10px"
+          mt="5px"
+          textAlign="center"
+        >
+          <HStack spacing={2}>
+            <GrDrag /> <Text>{columnName}</Text>
+          </HStack>
+        </Heading>
+      )
+    }
+  }
+
+  const changeName = () => {
+    setEditVisibility(false)
+    editColumnName(props.id, columnName)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      changeName()
+    }
+  }
+
   return (
     <Draggable draggableId={props.id} index={props.index}>
       {(provided) => (
@@ -16,7 +83,6 @@ export default function Column(props: IProps) {
           width="270px"
           height="calc(100vh - 90px)"
           overflowY="auto"
-          mt="10px"
           mx="10px"
         >
           <Box bg="#f0f0f0" pb="5px" rounded="sm">
@@ -25,16 +91,25 @@ export default function Column(props: IProps) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Heading
-                {...provided.dragHandleProps}
-                as="h6"
-                size="sm"
-                ml="10px"
-                mt="5px"
-                textAlign="center"
-              >
-                <Box display="flex">Drag {columnName}</Box>
-              </Heading>
+              {renderColumnTitle(provided.dragHandleProps)}
+              <Box my="10px" mr="10px" cursor="grab" display="flex">
+                <Menu>
+                  <MenuButton aria-label="Options">
+                    <FiMoreHorizontal />
+                  </MenuButton>
+                  <MenuList justifyContent="center" alignItems="center">
+                    <MenuItem onClick={() => setEditVisibility(true)}>
+                      <AiOutlineEdit />
+                      <Text marginLeft="5px">Edit</Text>
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem onClick={() => deleteColumn(props.id)}>
+                      <AiOutlineDelete />
+                      <Text marginLeft="5px">Delete</Text>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
             </Box>
           </Box>
         </Box>

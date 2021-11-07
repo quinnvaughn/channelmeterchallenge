@@ -25,6 +25,8 @@ export default function ColumnList() {
               display="flex"
               position="absolute"
               overflowY="auto"
+              paddingRight="8px"
+              paddingTop="8px"
             >
               {columns.map((col, i) => (
                 <Column key={col.id} {...col} index={i} />
