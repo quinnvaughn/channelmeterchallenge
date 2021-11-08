@@ -55,9 +55,11 @@ export const boardSlice = createSlice({
       } else {
         // not the last column.
         // sort cards.
-        state.columns[index].cards.sort((a, b) => a.position - b.position)
+        const sortedCards = [...state.columns[index].cards].sort(
+          (a, b) => a.position - b.position
+        )
         const newColumn = state.columns[index + 1]
-        for (let card of state.columns[index].cards) {
+        for (let card of sortedCards) {
           // add the card to the end of the new column
           // assign new position and columnId
           card.columnId = newColumn.id

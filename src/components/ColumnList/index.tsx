@@ -34,8 +34,10 @@ export default function ColumnList() {
     <Box
       display="block"
       position="relative"
-      height="calc(100vh - 90px)"
+      height="calc(100vh - 96px)"
       overflow="auto"
+      paddingLeft="4"
+      paddingTop="4"
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="columns" direction="horizontal" type="column">

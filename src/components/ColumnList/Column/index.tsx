@@ -97,9 +97,9 @@ export default function Column(props: IProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           width="270px"
-          height="calc(100vh - 90px)"
+          height="calc(100vh - 96px)"
           overflowY="auto"
-          mx="10px"
+          marginRight="10px"
         >
           <Box bg="#f0f0f0" pb="5px" rounded="sm">
             <Box

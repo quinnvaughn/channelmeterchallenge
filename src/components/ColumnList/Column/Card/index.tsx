@@ -17,6 +17,8 @@ export default function Card(props: IProps) {
   useLayoutEffect(() => {
     if (editVisibility && inputRef.current) {
       inputRef.current.focus()
+      // text area will focus at the beginning otherwise.
+      inputRef.current.selectionStart = inputRef.current.value.length
     }
   }, [editVisibility])
 
@@ -57,7 +59,8 @@ export default function Card(props: IProps) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           ref={provided.innerRef}
-          m="5px"
+          boxShadow="0 1px 0 #091e4240"
+          m="8px"
           p="10px"
           minHeight="80px"
           borderWidth="1px"
