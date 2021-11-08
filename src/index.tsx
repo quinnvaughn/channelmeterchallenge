@@ -6,6 +6,7 @@ import { Provider } from "react-redux"
 import reportWebVitals from "./reportWebVitals"
 import { store } from "./redux/store"
 import theme from "./theme"
+import "./index.css"
 
 const AppWithProviders = () => (
   <Provider store={store}>

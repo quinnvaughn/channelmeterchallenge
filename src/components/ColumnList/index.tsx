@@ -35,7 +35,7 @@ export default function ColumnList() {
       display="block"
       position="relative"
       height="calc(100vh - 96px)"
-      overflow="auto"
+      overflowY="auto"
       paddingLeft="4"
       paddingTop="4"
     >
