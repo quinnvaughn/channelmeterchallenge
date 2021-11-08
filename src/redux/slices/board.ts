@@ -10,7 +10,7 @@ type BoardState = {
 
 const initialState: BoardState = {
   columns: [],
-  name: "So cool",
+  name: "",
 }
 
 export const boardSlice = createSlice({
