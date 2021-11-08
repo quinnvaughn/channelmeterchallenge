@@ -26,7 +26,6 @@ export default function ColumnList() {
 
     // if column is moved
     if (type === "column") {
-      // console.log(result)
       moveColumn(draggableId, destination.index)
     }
   }

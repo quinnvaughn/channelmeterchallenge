@@ -1,5 +1,5 @@
 import { Draggable } from "react-beautiful-dnd"
-import { Box, Input } from "@chakra-ui/react"
+import { Box, Textarea, Text } from "@chakra-ui/react"
 import { Card as CardType } from "../../../../redux/types"
 import { useState, useRef, useLayoutEffect } from "react"
 import useBoard from "../../../../hooks/useBoard"
@@ -9,7 +9,7 @@ type IProps = CardType
 export default function Card(props: IProps) {
   const [cardTitle, setCardTitle] = useState(props.title)
   const { editCard } = useBoard()
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLTextAreaElement | null>(null)
   const [editVisibility, setEditVisibility] = useState(false)
 
   useLayoutEffect(() => {
@@ -21,7 +21,7 @@ export default function Card(props: IProps) {
   const renderCardTitle = () => {
     if (editVisibility) {
       return (
-        <Input
+        <Textarea
           ref={inputRef}
           value={cardTitle}
           size="sm"
@@ -32,7 +32,7 @@ export default function Card(props: IProps) {
         />
       )
     } else {
-      return <div>{cardTitle}</div>
+      return <Text>{cardTitle}</Text>
     }
   }
 

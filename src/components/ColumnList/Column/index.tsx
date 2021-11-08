@@ -11,13 +11,13 @@ import {
   MenuDivider,
   Button,
 } from "@chakra-ui/react"
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react"
+import React, { useState, useRef, useLayoutEffect } from "react"
 import {
   Draggable,
   DraggableProvidedDragHandleProps,
   Droppable,
 } from "react-beautiful-dnd"
-import { Card, Column as ColumnType } from "../../../redux/types"
+import { Column as ColumnType } from "../../../redux/types"
 import { GrDrag } from "react-icons/gr"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
