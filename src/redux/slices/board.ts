@@ -121,10 +121,10 @@ export const boardSlice = createSlice({
       action: PayloadAction<{
         columnId: string
         cardId: string
-        title?: string
+        title: string
       }>
     ) => {
-      const { columnId, cardId, ...rest } = action.payload
+      const { columnId, cardId, title } = action.payload
       const column = state.columns.find((col) => col.id === columnId)
 
       if (!column) return
@@ -133,7 +133,7 @@ export const boardSlice = createSlice({
 
       if (!card) return
 
-      card = { ...card, ...rest }
+      card.title = title
     },
     deleteCard: (
       state,
@@ -185,11 +185,22 @@ export const boardSlice = createSlice({
           (c) => c.id !== card!.id
         )
 
+        const newCard = { ...card }
+
         // change position and columnId
-        card.position = position
-        card.columnId = newColumn.id
+        newCard.position = position
+        newCard.columnId = newColumn.id
         // add card into new column
-        newColumn.cards.push(card)
+        newColumn.cards.push(newCard)
+
+        for (let updatedCard of newColumn.cards) {
+          if (
+            updatedCard.position >= position &&
+            updatedCard.id !== newCard.id
+          ) {
+            updatedCard.position = updatedCard.position + 1
+          }
+        }
       } else {
         // moving inside same column.
         const column = state.columns.find((col) => col.id === card!.columnId)

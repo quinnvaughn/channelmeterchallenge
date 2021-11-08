@@ -1,10 +1,53 @@
 import { Draggable } from "react-beautiful-dnd"
-import { Box } from "@chakra-ui/react"
+import { Box, Input } from "@chakra-ui/react"
 import { Card as CardType } from "../../../../redux/types"
+import { useState, useRef, useLayoutEffect } from "react"
+import useBoard from "../../../../hooks/useBoard"
 
 type IProps = CardType
 
 export default function Card(props: IProps) {
+  const [cardTitle, setCardTitle] = useState(props.title)
+  const { editCard } = useBoard()
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [editVisibility, setEditVisibility] = useState(false)
+
+  useLayoutEffect(() => {
+    if (editVisibility && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [editVisibility])
+
+  const renderCardTitle = () => {
+    if (editVisibility) {
+      return (
+        <Input
+          ref={inputRef}
+          value={cardTitle}
+          size="sm"
+          onBlur={changeName}
+          onChange={(e) => setCardTitle(e.target.value)}
+          bg="white"
+          onKeyDown={handleKeyDown}
+        />
+      )
+    } else {
+      return <div>{cardTitle}</div>
+    }
+  }
+
+  const changeName = () => {
+    setEditVisibility(false)
+    editCard(props.columnId, props.id, cardTitle)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      changeName()
+    }
+  }
+
   return (
     <Draggable draggableId={props.id} index={props.position}>
       {(provided) => (
@@ -21,8 +64,9 @@ export default function Card(props: IProps) {
           borderRadius="md"
           overflow="auto"
           _hover={{ backgroundColor: "rgb(227, 234, 240)" }}
+          onClick={() => setEditVisibility(true)}
         >
-          <div>{props.title}</div>
+          {renderCardTitle()}
         </Box>
       )}
     </Draggable>

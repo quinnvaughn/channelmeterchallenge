@@ -11,7 +11,7 @@ import {
   MenuDivider,
   Button,
 } from "@chakra-ui/react"
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react"
 import {
   Draggable,
   DraggableProvidedDragHandleProps,
@@ -28,13 +28,22 @@ type IProps = ColumnType & { index: number }
 
 export default function Column(props: IProps) {
   const [columnName, setColumnName] = useState(props.name)
-  const { deleteColumn, editColumnName, addCard } = useBoard()
+  const {
+    deleteColumn,
+    editColumnName,
+    addCard,
+    sortedCards: sortCards,
+  } = useBoard()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [editVisibility, setEditVisibility] = useState(false)
 
-  const sortedCards = [...props.cards].sort(
-    (a: Card, b: Card) => a.position - b.position
-  )
+  const sortedCards = sortCards(props.id)
+
+  useLayoutEffect(() => {
+    if (editVisibility && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [editVisibility])
 
   const renderColumnTitle = (
     draggable: DraggableProvidedDragHandleProps | undefined

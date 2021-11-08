@@ -29,7 +29,7 @@ export default function useBoard() {
     const column = columns.find((col) => col.id === columnId)
     if (!column) return []
 
-    return column.cards.sort((a, b) => a.position - b.position)
+    return [...column.cards].sort((a, b) => a.position - b.position)
   }
 
   const addBoardName = (name: string) => {
@@ -48,7 +48,7 @@ export default function useBoard() {
     dispatch(dc(columnId))
   }
 
-  const editCard = (columnId: string, cardId: string, title?: string) => {
+  const editCard = (columnId: string, cardId: string, title: string) => {
     dispatch(eCard({ columnId, cardId, title }))
   }
 
