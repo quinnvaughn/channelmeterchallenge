@@ -41,6 +41,8 @@ export default function Card(props: IProps) {
   }
 
   const changeName = () => {
+    // do not let people make a card with no length.
+    if (cardTitle.length === 0) return
     setEditVisibility(false)
     editCard(props.columnId, props.id, cardTitle)
   }
