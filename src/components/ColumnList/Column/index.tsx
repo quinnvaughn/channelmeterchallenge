@@ -18,9 +18,9 @@ import {
   Droppable,
 } from "react-beautiful-dnd"
 import { Column as ColumnType } from "../../../redux/types"
-import { GrDrag } from "react-icons/gr"
-import { FiMoreHorizontal } from "react-icons/fi"
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
+import { MdDragIndicator, MdDelete } from "react-icons/md"
+import { FiEdit } from "react-icons/fi"
+import { BiDotsHorizontal } from "react-icons/bi"
 import useBoard from "../../../hooks/useBoard"
 import CardList from "./CardList"
 
@@ -71,7 +71,7 @@ export default function Column(props: IProps) {
           textAlign="center"
         >
           <HStack spacing={2}>
-            <GrDrag /> <Text>{columnName}</Text>
+            <MdDragIndicator /> <Text>{columnName}</Text>
           </HStack>
         </Heading>
       )
@@ -111,16 +111,16 @@ export default function Column(props: IProps) {
               <Box my="10px" mr="10px" cursor="grab" display="flex">
                 <Menu>
                   <MenuButton aria-label="Options">
-                    <FiMoreHorizontal />
+                    <BiDotsHorizontal />
                   </MenuButton>
                   <MenuList justifyContent="center" alignItems="center">
                     <MenuItem onClick={() => setEditVisibility(true)}>
-                      <AiOutlineEdit />
+                      <FiEdit />
                       <Text marginLeft="5px">Edit</Text>
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem onClick={() => deleteColumn(props.id)}>
-                      <AiOutlineDelete />
+                      <MdDelete />
                       <Text marginLeft="5px">Delete</Text>
                     </MenuItem>
                   </MenuList>

@@ -1,6 +1,6 @@
 import { Draggable } from "react-beautiful-dnd"
 import { Box, Textarea, Text } from "@chakra-ui/react"
-import { BsTrash } from "react-icons/bs"
+import { MdDelete } from "react-icons/md"
 import { Card as CardType } from "../../../../redux/types"
 import { useState, useRef, useLayoutEffect } from "react"
 import useBoard from "../../../../hooks/useBoard"
@@ -74,7 +74,7 @@ export default function Card(props: IProps) {
         >
           {renderCardTitle()}
           {!editVisibility && (
-            <BsTrash
+            <MdDelete
               id="delete"
               onClick={(e) => {
                 // so it doesn't also flip the visibility.
