@@ -1,14 +1,16 @@
 import { Draggable } from "react-beautiful-dnd"
 import { Box, Textarea, Text } from "@chakra-ui/react"
+import { BsTrash } from "react-icons/bs"
 import { Card as CardType } from "../../../../redux/types"
 import { useState, useRef, useLayoutEffect } from "react"
 import useBoard from "../../../../hooks/useBoard"
+import "./card.css"
 
 type IProps = CardType
 
 export default function Card(props: IProps) {
   const [cardTitle, setCardTitle] = useState(props.title)
-  const { editCard } = useBoard()
+  const { editCard, deleteCard } = useBoard()
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
   const [editVisibility, setEditVisibility] = useState(false)
 
@@ -63,10 +65,20 @@ export default function Card(props: IProps) {
           cursor="pointer"
           borderRadius="md"
           overflow="auto"
+          position="relative"
           _hover={{ backgroundColor: "rgb(227, 234, 240)" }}
           onClick={() => setEditVisibility(true)}
         >
           {renderCardTitle()}
+          {!editVisibility && (
+            <BsTrash
+              id="delete"
+              onClick={(e) => {
+                e.stopPropagation()
+                deleteCard(props.columnId, props.id)
+              }}
+            />
+          )}
         </Box>
       )}
     </Draggable>

@@ -145,6 +145,15 @@ export const boardSlice = createSlice({
 
       if (!column) return
       column.cards = column.cards.filter((c) => c.id !== cardId)
+
+      for (let updatedCard of column.cards) {
+        // does not need to check for column,
+        // as it's already removed.
+        if (updatedCard.position > column.position) {
+          // subtract all positions down.
+          updatedCard.position -= 1
+        }
+      }
     },
     moveCard: (
       state,
@@ -198,7 +207,7 @@ export const boardSlice = createSlice({
             updatedCard.position >= position &&
             updatedCard.id !== newCard.id
           ) {
-            updatedCard.position = updatedCard.position + 1
+            updatedCard.position += 1
           }
         }
       } else {
@@ -215,7 +224,7 @@ export const boardSlice = createSlice({
         // that position and push them up.
         for (let updatedCard of column.cards) {
           if (updatedCard.position >= position && updatedCard.id !== card.id) {
-            updatedCard.position = updatedCard.position + 1
+            updatedCard.position += 1
           }
         }
       }
