@@ -61,7 +61,7 @@ export default function useBoard() {
   }
 
   const moveColumn = (columnId: string, position: number) => {
-    dispatch(mc({ id: columnId, newPosition: position }))
+    dispatch(mc({ id: columnId, position: position }))
   }
 
   return {

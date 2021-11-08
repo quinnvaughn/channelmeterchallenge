@@ -80,27 +80,45 @@ export const boardSlice = createSlice({
     },
     moveColumn: (
       state,
-      action: PayloadAction<{ id: string; newPosition: number }>
+      action: PayloadAction<{ id: string; position: number }>
     ) => {
-      const { newPosition, id } = action.payload
+      const { position, id } = action.payload
 
-      if (newPosition < 0 || newPosition > state.columns.length + 1) return
+      if (position < 0 || position > state.columns.length + 1) return
 
       const column = state.columns.find((col) => col.id === id)
 
       if (!column) return
-      // set new position.
-      column.position = newPosition
-      // go through all columns with positions equal to or greater than
-      // that position and push them up.
-      for (let updatedColumn of state.columns) {
-        if (
-          updatedColumn.position >= newPosition &&
-          updatedColumn.id !== column.id
-        ) {
-          updatedColumn.position = updatedColumn.position + 1
+      const positionDifference = column.position - position
+
+      // if you are moving the column right
+      if (positionDifference < 0) {
+        // get the columns between old and new spot.
+        for (let updatedColumn of state.columns) {
+          if (
+            updatedColumn.position > column.position &&
+            updatedColumn.position <= position &&
+            updatedColumn.id !== column.id
+          ) {
+            updatedColumn.position -= 1
+          }
+        }
+      } else {
+        // moving the column left.
+        // get the columns between old and new spot.
+        for (let updatedColumn of state.columns) {
+          if (
+            updatedColumn.position >= position &&
+            updatedColumn.position < column.position &&
+            updatedColumn.id !== column.id
+          ) {
+            updatedColumn.position += 1
+          }
         }
       }
+
+      // set new position.
+      column.position = position
     },
     addCard: (state, action: PayloadAction<string>) => {
       const column = state.columns.find((col) => col.id === action.payload)
@@ -194,22 +212,23 @@ export const boardSlice = createSlice({
           (c) => c.id !== card!.id
         )
 
-        const newCard = { ...card }
-
-        // change position and columnId
-        newCard.position = position
-        newCard.columnId = newColumn.id
-        // add card into new column
-        newColumn.cards.push(newCard)
-
         for (let updatedCard of newColumn.cards) {
-          if (
-            updatedCard.position >= position &&
-            updatedCard.id !== newCard.id
-          ) {
+          if (updatedCard.position >= position && updatedCard.id !== card.id) {
             updatedCard.position += 1
           }
         }
+        for (let updatedCard of currentColumn.cards) {
+          // if the card is below the just moved card
+          // drop its position.
+          if (updatedCard.position > card.position) {
+            updatedCard.position -= 1
+          }
+        }
+
+        card.position = position
+        card.columnId = newColumn.id
+        // add card into new column
+        newColumn.cards.push(card)
       } else {
         // moving inside same column.
         const column = state.columns.find((col) => col.id === card!.columnId)
@@ -218,15 +237,36 @@ export const boardSlice = createSlice({
 
         if (position < 0 || position > column.cards.length + 1) return
 
-        // set new position.
-        card.position = position
-        // go through all cards with positions equal to or greater than
-        // that position and push them up.
-        for (let updatedCard of column.cards) {
-          if (updatedCard.position >= position && updatedCard.id !== card.id) {
-            updatedCard.position += 1
+        const positionDifference = card.position - position
+
+        // if you are moving the card down
+        if (positionDifference < 0) {
+          // get the cards between old and new spot.
+          for (let updatedCard of column.cards) {
+            if (
+              updatedCard.position > card.position &&
+              updatedCard.position <= position &&
+              updatedCard.id !== card.id
+            ) {
+              updatedCard.position -= 1
+            }
+          }
+        } else {
+          // moving the card up.
+          // get the cards between old and new spot.
+          for (let updatedCard of column.cards) {
+            if (
+              updatedCard.position >= position &&
+              updatedCard.position < card.position &&
+              updatedCard.id !== card.id
+            ) {
+              updatedCard.position += 1
+            }
           }
         }
+
+        // set new position.
+        card.position = position
       }
     },
   },

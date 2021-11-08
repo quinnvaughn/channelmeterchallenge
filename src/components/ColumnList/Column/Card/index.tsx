@@ -74,6 +74,7 @@ export default function Card(props: IProps) {
             <BsTrash
               id="delete"
               onClick={(e) => {
+                // so it doesn't also flip the visibility.
                 e.stopPropagation()
                 deleteCard(props.columnId, props.id)
               }}
