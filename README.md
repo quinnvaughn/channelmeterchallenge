@@ -19,3 +19,5 @@ Normally I'd also style my own things used styled-components, but for the sake o
 There was only one page so I had no need for React Router.
 
 I like to abstract all my redux code into various hooks that just call the dispatch through a normal function, so the user consuming it doesn't even need to know it's using Redux.
+
+Normally when making forms I'd use Formik or react-hook-form, but these forms were so simple/didn't make any API calls, that I just decided to reach for local state.
